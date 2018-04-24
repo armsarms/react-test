@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import Home from '../Home'
 import Github from '../Github';
-import Form from './Form';
+import RouterForm from '../router/RouterForm';
 import UserList from './UserList';
 
 class Main extends Component {
@@ -14,9 +14,10 @@ class Main extends Component {
           {/* <Route path='/1' component={Roster} /> */}
           <Route path='/2' render={(props) => (
             <Github {...props} source="https://api.github.com/users/octocat/gists" />
-          )} />
-          <Route path='/3' component={Form} />          
-          <Route path='/4' component={UserList} />          
+          )} />       
+                   
+          <Route path='/4' component={UserList} />
+          <RouterForm></RouterForm>           
         </Switch>
       </div>
     );

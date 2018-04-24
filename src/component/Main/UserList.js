@@ -15,17 +15,34 @@ class UserList extends Component {
         }.bind(this))
     }
     handleEdit(li) {
-        this.props.history.push('/3/:'+li.id)
+        // var data = { id: li.id, username: li.username, password: li.password };
+        var data = {
+            username: {
+                valid: true,
+                value: li.username,
+                error: ''
+            },
+            password: {
+                valid: true,
+                value: li.password,
+                error: ''
+            }
+        };
+        var path = {
+            pathname: '/3/'+li.id,
+            state: data,
+        }
+        this.props.history.push(path)
     }
     handleDel(li) {
-       axios.delete('http://localhost:3000/user/'+li.id).then(function (res) {
-            this.setState({ list: this.state.list.filter(item => item.id !== li.id) }) 
+        axios.delete('http://localhost:3000/user/' + li.id).then(function (res) {
+            this.setState({ list: this.state.list.filter(item => item.id !== li.id) })
             // console.log(res);               
-       }.bind(this)).catch(function (error) {
-        console.log(error);
-      }); 
+        }.bind(this)).catch(function (error) {
+            console.log(error);
+        });
     }
-    
+
     render() {
         const lists = this.state.list;//important
         return (
@@ -66,5 +83,5 @@ class UserList extends Component {
 }
 UserList.contextTypes = {
     router: Object
-  };
+};
 export default UserList;

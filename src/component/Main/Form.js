@@ -57,53 +57,59 @@ class Form extends Component {
         });
     }
 
-   handleSubmit(e) {
+    handleSubmit(e) {
         e.preventDefault();
+        const id = this.props.match.params.id;
         const { form: { username, password } } = this.state;
-        const url = 'http://localhost:3000/user';
-        const method = 'post';
+        let PropUrl = 'http://localhost:3000/user';
+        let method = 'post';
         // const {form: {name, age, gender}, formValid, editTarget} = this.props;
-        if (!username.valid || !password.valid ) {
+        if (!username.valid || !password.valid) {
             console.log('请填写正确的信息后重试');
             return;
         }
-        // if(props){
-        //     url = 'http://localhost:3000/user/' +prop.id;
-        // }
+        console.log(id);
+        
+        if (id) {
+            PropUrl = 'http://localhost:3000/user/' + id;
+            method = 'put';
+        }
         axios({
             method: method,
-            url: url,
+            url: PropUrl,
             data: {
                 username: username.value,
                 password: password.value
             }
-          }).then(function (res) {
+        }).then(function (res) {
             console.log(res);
+            this.props.history.push('/4')//important
             if (res.status == '201') {
                 console.log('OJBK');
-                this.props.history.push('/4')//important
-                // browserHistory.push('/4')
-                // this.context.router.push('/4');
             }
         }.bind(this))
     }
-    // componentWillMount () {
-    //     const {editTarget, setFormValues} = this.props;
-    //     if (editTarget) {
-    //       setFormValues(editTarget);
-    //     }
-    //   }
     componentDidMount() {
         // 来自于路径 `/inbox/messages/:id`
-        const id = this.props.match.params.id
-        console.log(
-            id
-        );
-        
-      }
+        // const id = this.props.match.params.id //params 传值
+        const data = this.props.location.state; //state 传值
+        console.log(data);
+        if (data) {
+            this.setState({
+                form: data
+            });
+        }
+        console.log(this.state);
+        // axios({
+        //     method: 'put',
+        //     url: 'http://localhost:3000/user/10020',
+        //     data: {
+        //         username: 222,
+        //         password: 333
+        //     }
+        // })
+    }
     render() {
-        // const userId = this.context.router.route.match.params.id;
-        console.log(this.props.params);
         const { form: { username, password } } = this.state;
         return (
             <div>
@@ -112,7 +118,7 @@ class Form extends Component {
                     <input type="text" value={username.value} name='username' onChange={(e) => this.handleValueChange('username', e.target.value)} />
                     <label htmlFor="password">用户密码</label>
                     <input type="password" value={password.value} name='password' onChange={(e) => this.handleValueChange('password', e.target.value)} />
-                    <button onClick={(e)=>this.handleSubmit(e)}>提交</button>
+                    <button onClick={(e) => this.handleSubmit(e)}>提交</button>
                 </form>
             </div>
         );
