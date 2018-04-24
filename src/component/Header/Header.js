@@ -18,6 +18,7 @@ class Header extends Component {
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/2'>Header</Link></li>
           <li><Link to='/3'>Footer</Link></li>
+          <li><Link to='/4'>Userlist</Link></li>
         </ul>
       </div>
     );

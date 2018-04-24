@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Router, Route, BrowserRouter } from 'react-router-dom';
+// import PropTypes from 'react-prop-types';
+// import { browserHistory } from 'react-router'
 class Form extends Component {
     constructor(props) {
         super(props);
@@ -56,24 +59,56 @@ class Form extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        const id = this.props.match.params.id;
         const { form: { username, password } } = this.state;
-        if (!username.valid || !password.valid ) {
+        let PropUrl = 'http://localhost:3000/user';
+        let method = 'post';
+        // const {form: {name, age, gender}, formValid, editTarget} = this.props;
+        if (!username.valid || !password.valid) {
             console.log('请填写正确的信息后重试');
             return;
         }
-        axios.post('http://localhost:3000/user'
-            , {
+        console.log(id);
+        
+        if (id) {
+            PropUrl = 'http://localhost:3000/user/' + id;
+            method = 'put';
+        }
+        axios({
+            method: method,
+            url: PropUrl,
+            data: {
                 username: username.value,
                 password: password.value
             }
-        ).then(function (res) {
+        }).then(function (res) {
             console.log(res);
+            this.props.history.push('/4')//important
             if (res.status == '201') {
                 console.log('OJBK');
             }
-        })
+        }.bind(this))
     }
-
+    componentDidMount() {
+        // 来自于路径 `/inbox/messages/:id`
+        // const id = this.props.match.params.id //params 传值
+        const data = this.props.location.state; //state 传值
+        console.log(data);
+        if (data) {
+            this.setState({
+                form: data
+            });
+        }
+        console.log(this.state);
+        // axios({
+        //     method: 'put',
+        //     url: 'http://localhost:3000/user/10020',
+        //     data: {
+        //         username: 222,
+        //         password: 333
+        //     }
+        // })
+    }
     render() {
         const { form: { username, password } } = this.state;
         return (
@@ -83,11 +118,13 @@ class Form extends Component {
                     <input type="text" value={username.value} name='username' onChange={(e) => this.handleValueChange('username', e.target.value)} />
                     <label htmlFor="password">用户密码</label>
                     <input type="password" value={password.value} name='password' onChange={(e) => this.handleValueChange('password', e.target.value)} />
-                    <button onClick={this.handleSubmit}>提交</button>
+                    <button onClick={(e) => this.handleSubmit(e)}>提交</button>
                 </form>
             </div>
         );
     }
 }
-
+// Form.contextTypes={
+//     router: React.PropTypes.object.isRequired
+// }
 export default Form;
