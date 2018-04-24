@@ -3,6 +3,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import Home from '../Home'
 import Github from '../Github';
 import Form from './Form';
+import UserList from './UserList';
 
 class Main extends Component {
   render() {
@@ -15,6 +16,7 @@ class Main extends Component {
             <Github {...props} source="https://api.github.com/users/octocat/gists" />
           )} />
           <Route path='/3' component={Form} />          
+          <Route path='/4' component={UserList} />          
         </Switch>
       </div>
     );
