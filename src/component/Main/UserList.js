@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { post } from '../../utils/request'
+import { get } from '../../utils/request'
 class UserList extends Component {
     constructor(props) {
         super(props);
@@ -25,40 +25,36 @@ class UserList extends Component {
         //     this.setState({ list: res.data })
         // }.bind(this))
 
-        // post('http://localhost:3000/login', {
-        //     account: "admin",
-        //     password: "123456"
-        // }).then(function (params) {
-        //     console.log(params);
-            
-        // })
-
-
-        let token = ''; 
-        axios({
-            method: "post",
-            url: 'http://localhost:3000/login',
-            data: {
-                account: "admin",
-                password: "123456"
-              }
-        }).then(function (res) {
-            console.log(res.headers['access-token']);
-            console.log(res);
-            token = res.headers['access-token'];
-        }.bind(this)).then(function () {
-            console.log(token+'haha');
-            axios({
-                method: "get",
-                url: 'http://localhost:3000/user',
-                headers: {
-                    'Access-Token': token // 从sessionStorage中获取access token
-                  }
-            }).then(function (res) {
-                console.log(res);
-                this.setState({ list: res.data })
-            }.bind(this))
+        get('http://localhost:3000/user').then(function (res) {
+            this.setState({ list: res.data })
         }.bind(this))
+
+
+        // let token = ''; 
+        // axios({
+        //     method: "post",
+        //     url: 'http://localhost:3000/login',
+        //     data: {
+        //         account: "admin",
+        //         password: "123456"
+        //       }
+        // }).then(function (res) {
+        //     console.log(res.headers['access-token']);
+        //     console.log(res);
+        //     token = res.headers['access-token'];
+        // }.bind(this)).then(function () {
+        //     console.log(token+'haha');
+        //     axios({
+        //         method: "get",
+        //         url: 'http://localhost:3000/user',
+        //         headers: {
+        //             'Access-Token': token // 从sessionStorage中获取access token
+        //           }
+        //     }).then(function (res) {
+        //         console.log(res);
+        //         this.setState({ list: res.data })
+        //     }.bind(this))
+        // }.bind(this))
 
 
     }
