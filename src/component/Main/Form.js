@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Router, Route, BrowserRouter } from 'react-router-dom';
+// import { Router, Route, BrowserRouter } from 'react-router-dom';
 // import PropTypes from 'react-prop-types';
 // import { browserHistory } from 'react-router'
 class Form extends Component {
