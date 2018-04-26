@@ -18,18 +18,20 @@ export default function request(method, url, data) {
         },
         data
     }).then(function (res) {
+        console.log(res);
+        if (res.status === 401) {
+            // this.props.history.push('/login');
+            // return Promise.reject('Unauthorized.');
             console.log(res);
-            if (res.status === 401) {
-                this.props.history.push('/login');
-                return Promise.reject('Unauthorized.');
-            } else {
-                const token = res.headers['access-token'];
-                if (token) {   
-                    sessionStorage.setItem('access_token', token);
-                }
-                return res;
+
+        } else {
+            const token = res.headers['access-token'];
+            if (token) {
+                sessionStorage.setItem('access_token', token);
             }
-        }.bind(this));
+            return res;
+        }
+    }.bind(this));
 }
 
 export const get = url => request('GET', url);

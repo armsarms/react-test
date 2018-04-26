@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { get } from '../../utils/request'
+import { get, del } from '../../utils/request'
 class UserList extends Component {
     constructor(props) {
         super(props);
@@ -26,8 +26,14 @@ class UserList extends Component {
         // }.bind(this))
 
         get('http://localhost:3000/user').then(function (res) {
-            this.setState({ list: res.data })
-        }.bind(this))
+            if (res) {
+                this.setState({ list: res.data })
+            }
+            // console.log(res);   
+        }.bind(this)).catch(function (error) {
+            console.log(error);
+            this.props.history.push('/login')
+          }.bind(this));
 
 
         // let token = ''; 
@@ -79,7 +85,7 @@ class UserList extends Component {
         this.props.history.push(path)
     }
     handleDel(li) {
-        axios.delete('http://localhost:3000/user/' + li.id).then(function (res) {
+        del('http://localhost:3000/user/' + li.id).then(function (res) {
             this.setState({ list: this.state.list.filter(item => item.id !== li.id) })
             // console.log(res);               
         }.bind(this)).catch(function (error) {
