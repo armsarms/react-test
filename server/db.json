@@ -23,11 +23,6 @@
     {
       "username": "root",
       "password": "100200",
-      "id": 10028
-    },
-    {
-      "username": "root",
-      "password": "100200",
       "id": 10029
     },
     {
@@ -104,6 +99,11 @@
       "username": "切尔茜",
       "password": "100200",
       "id": 10044
+    },
+    {
+      "username": "切尔茜",
+      "password": "100200",
+      "id": 10045
     }
   ],
   "book": [

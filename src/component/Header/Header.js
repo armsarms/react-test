@@ -1,28 +1,82 @@
 import React, { Component } from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 import logo from '../../logo.svg';
-class Header extends Component {
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import Main from '../Main/Main'
+const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
+class HeaderT extends Component {
   render() {
     return (
-      <div>
+    <Layout>
         <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
+          <header>
+            <div className="logo" />
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              defaultSelectedKeys={['2']}
+              style={{ lineHeight: '64px' }}
+            >
+              <Menu.Item key="1">nav 1</Menu.Item>
+              <Menu.Item key="2">nav 2</Menu.Item>
+              <Menu.Item key="3">nav 3</Menu.Item>
+            </Menu>
           </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
+          <Layout>
+            <Sider width={200} style={{ background: '#fff' }}>
+              <Menu
+                mode="inline"
+                defaultSelectedKeys={['1']}
+                defaultOpenKeys={['sub1']}
+                style={{ height: '100%', borderRight: 0 }}
+              >
+                <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
+                  <Menu.Item key="1"><Link to='/'>首页</Link></Menu.Item>
+                  <Menu.Item key="2"><Link to='/2'>测试</Link></Menu.Item>
+                  <Menu.Item key="3"><Link to='/3'>输入</Link></Menu.Item>
+                  <Menu.Item key="4"><Link to='/4'>用户列表</Link></Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
+                  <Menu.Item key="5"><Link to='/login'>登陆</Link></Menu.Item>
+                  <Menu.Item key="6">option6</Menu.Item>
+                  <Menu.Item key="7">option7</Menu.Item>
+                  <Menu.Item key="8">option8</Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub3" title={<span><Icon type="notification" />subnav 3</span>}>
+                  <Menu.Item key="9">option9</Menu.Item>
+                  <Menu.Item key="10">option10</Menu.Item>
+                  <Menu.Item key="11">option11</Menu.Item>
+                  <Menu.Item key="12">option12</Menu.Item>
+                </SubMenu>
+              </Menu>
+            </Sider>
+            <Layout style={{ padding: '0 24px 24px' }}>
+              <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>List</Breadcrumb.Item>
+                <Breadcrumb.Item>App</Breadcrumb.Item>
+              </Breadcrumb>
+              <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
+                <Main/>
+        </Content>
+            </Layout>
+          </Layout>
+
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        </div>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/2'>Header</Link></li>
-          <li><Link to='/3'>Footer</Link></li>
-          <li><Link to='/4'>Userlist</Link></li>
-        </ul>
       </div>
+      {/* <ul>
+        <li><Link to='/'>首页</Link></li>
+        <li><Link to='/2'>测试</Link></li>
+        <li><Link to='/3'>输入</Link></li>
+        <li><Link to='/4'>用户列表</Link></li>
+        <li><Link to='/login'>登陆</Link></li>
+      </ul> */}
+  </Layout>
     );
   }
 }
 
-export default Header;
+export default HeaderT;
