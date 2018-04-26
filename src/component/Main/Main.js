@@ -4,6 +4,7 @@ import Home from '../Home'
 import Github from '../Github';
 import RouterForm from '../router/RouterForm';
 import UserList from './UserList';
+import Login from '../page/Login';
 
 class Main extends Component {
   render() {
@@ -17,6 +18,7 @@ class Main extends Component {
           )} />       
                    
           <Route path='/4' component={UserList} />
+          <Route path='/Login' component={Login} />
           <RouterForm></RouterForm>           
         </Switch>
       </div>

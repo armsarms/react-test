@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Router, Route, BrowserRouter } from 'react-router-dom';
+import { put, post } from '../../utils/request'
+
+// import { Router, Route, BrowserRouter } from 'react-router-dom';
 // import PropTypes from 'react-prop-types';
 // import { browserHistory } from 'react-router'
 class Form extends Component {
@@ -62,7 +64,7 @@ class Form extends Component {
         const id = this.props.match.params.id;
         const { form: { username, password } } = this.state;
         let PropUrl = 'http://localhost:3000/user';
-        let method = 'post';
+        let method = post;
         // const {form: {name, age, gender}, formValid, editTarget} = this.props;
         if (!username.valid || !password.valid) {
             console.log('请填写正确的信息后重试');
@@ -72,42 +74,37 @@ class Form extends Component {
         
         if (id) {
             PropUrl = 'http://localhost:3000/user/' + id;
-            method = 'put';
+            method = put;
         }
-        axios({
-            method: method,
-            url: PropUrl,
-            data: {
+
+        method(
+            PropUrl,
+            {
                 username: username.value,
                 password: password.value
             }
-        }).then(function (res) {
+        ).then(function (res) {
             console.log(res);
             this.props.history.push('/4')//important
             if (res.status == '201') {
                 console.log('OJBK');
             }
-        }.bind(this))
+        }.bind(this)).catch(function (error) {
+            console.log(error);
+            this.props.history.push('/login')
+          }.bind(this));
     }
     componentDidMount() {
         // 来自于路径 `/inbox/messages/:id`
         // const id = this.props.match.params.id //params 传值
         const data = this.props.location.state; //state 传值
-        console.log(data);
+        // console.log(data);
         if (data) {
             this.setState({
                 form: data
             });
         }
-        console.log(this.state);
-        // axios({
-        //     method: 'put',
-        //     url: 'http://localhost:3000/user/10020',
-        //     data: {
-        //         username: 222,
-        //         password: 333
-        //     }
-        // })
+
     }
     render() {
         const { form: { username, password } } = this.state;
